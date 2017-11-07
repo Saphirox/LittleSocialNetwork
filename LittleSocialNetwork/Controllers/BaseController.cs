@@ -3,11 +3,9 @@ using LittleSocialNetwork.Common.Definitions.Enums;
 using LittleSocialNetwork.Common.Definitions.Results;
 using LittleSocialNetwork.Common.Extensions;
 using LittleSocialNetwork.DataAccess.EF;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace LittleSocialNetwork.Controllers
+namespace LittleSocialNetwork.Web.Controllers
 {
     public class BaseController : Controller
     {

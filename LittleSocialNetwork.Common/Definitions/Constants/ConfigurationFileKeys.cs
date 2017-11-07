@@ -4,9 +4,9 @@
     {
         public static string AUTHENTICATION_SECTION = "Authentication";
 
-        public static string DATABASE_SECTION = "Database";
+        public static string DATABASE_SECTION = "Connection strings";
 
-        public const string CONNECTION_STRING = "Connection strings";
+        public const string CONNECTION_STRING = "Database string";
 
         public const string APPLICATION_ROOT = @"APPLICATION_ROOT";
 

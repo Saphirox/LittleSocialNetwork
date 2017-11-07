@@ -14,7 +14,7 @@ namespace LittleSocialNetwork.DataAccess.EF.Implementation
         private object _createdRepositoryLock;
         private bool _transactionClosed;
 
-        public UnitOfWork(DbContext dbContext)
+        public UnitOfWork(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
             _repositories = new Dictionary<Type, object>();
@@ -25,11 +25,11 @@ namespace LittleSocialNetwork.DataAccess.EF.Implementation
 
         public IRepository<TEntity> Repository<TEntity>() where TEntity : class, IEntity
         {
-            if (_repositories.ContainsKey(typeof(TEntity)))
+            if (!_repositories.ContainsKey(typeof(TEntity)))
             {
                 lock (_createdRepositoryLock)
                 {
-                    if (_repositories.ContainsKey(typeof(TEntity)))
+                    if (!_repositories.ContainsKey(typeof(TEntity)))
                     {
                         _repositories.Add(typeof(TEntity), _dbContext.Set<TEntity>());
                     }

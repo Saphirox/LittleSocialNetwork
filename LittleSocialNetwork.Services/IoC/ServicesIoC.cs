@@ -9,6 +9,7 @@ namespace LittleSocialNetwork.Services.IoC
         public static IServiceCollection RegisterServiceDependencies(this IServiceCollection collection)
         {
             collection.AddTransient<IAccountService, AccountService>();
+            collection.AddTransient<IHashingService, HashingService>();
             return collection;
         }
     }

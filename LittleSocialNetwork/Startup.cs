@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace LittleSocialNetwork.Web
 {
@@ -47,6 +48,12 @@ namespace LittleSocialNetwork.Web
                 .RegisterDependencyResolver();
 
             services.AddMvc();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+            });
+
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(_dependencyResolver.GetService<IAppSettings>().DatabaseSettings.CONNECTION_STRING));
             services.AddJwtAuthentication(_dependencyResolver.GetService<IAppSettings>());
         }
@@ -57,6 +64,12 @@ namespace LittleSocialNetwork.Web
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "SeshMe API");
+            });
 
             app.UseMvc();
             app.UseAuthentication();

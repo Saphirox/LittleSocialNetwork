@@ -5,6 +5,6 @@ namespace LittleSocialNetwork.Services.Services
 {
     public interface IAccountService
     {
-        ServiceResult<User> Create(User user);
+        ServiceResult<User> Create(User model);
     }
 }

@@ -2,7 +2,6 @@
 using LittleSocialNetwork.Common.Definitions.Enums;
 using LittleSocialNetwork.Common.Definitions.Settings;
 using LittleSocialNetwork.Common.Extensions;
-using LittleSocialNetwork.Controllers;
 using LittleSocialNetwork.Services.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,6 +20,7 @@ namespace LittleSocialNetwork.Web.Controllers
         }
 
         [Route("create-user")]
+        [HttpPost]
         public IActionResult RegisterAsUser([FromBody]RegisterApiModel model)
         {
             return ReturnResult(_accountService.Create(model.To(UserRole.User))
