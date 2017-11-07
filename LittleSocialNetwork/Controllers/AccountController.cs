@@ -19,11 +19,29 @@ namespace LittleSocialNetwork.Web.Controllers
             _settings = settings;
         }
 
-        [Route("create-user")]
         [HttpPost]
+        [Route("create-user")]
         public IActionResult RegisterAsUser([FromBody]RegisterApiModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             return ReturnResult(_accountService.Create(model.To(UserRole.User))
+                .ConvertToResult(user => JwtTokenApiModel.From(user, _settings)));
+        }
+
+        [HttpPost]
+        [Route("signin")]
+        public IActionResult SignInUser([FromBody] SignInApiModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            return ReturnResult(_accountService.Authenticate(model.To())
                 .ConvertToResult(user => JwtTokenApiModel.From(user, _settings)));
         }
     }

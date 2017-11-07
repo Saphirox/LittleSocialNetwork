@@ -48,5 +48,32 @@ namespace LittleSocialNetwork.Services.Services.Implementation
 
             return serviceResult;
         }
+
+        public ServiceResult<User> Authenticate(User model)
+        {
+            var result = new ServiceResult<User>();
+
+            try
+            {
+                var user = _uow.Repository<User>().GetQueryable()
+                    .FirstOrDefault(u => _hashingService.VerifyHashed(u.Password, model.Password)
+                                && model.Email == u.Email);
+
+                if (user == null)
+                {
+                    result.Status = ResultStatus.Forbidden;
+                    return result;
+                }
+
+                result.Result = user;
+                result.Status = ResultStatus.Success;
+            }
+            catch (Exception e)
+            {
+                result.Status = ResultStatus.ServerError;
+            }
+
+            return result;
+        }
     }
 }

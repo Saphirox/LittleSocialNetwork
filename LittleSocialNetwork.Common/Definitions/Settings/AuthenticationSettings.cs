@@ -7,7 +7,7 @@ namespace LittleSocialNetwork.Common.Definitions.Settings
     {
         private const string _DEFAULT_ISSUER_NAME = @"localhost";
         private const string _DEFAULT_AUDIENCE = @"MyKey";
-        private const string _DEFAULT_ENCRYPTION_KEY = "MyKey";
+        private const string _DEFAULT_ENCRYPTION_KEY = "Active-HDL’s Integrated Design Environment (IDE) includes a full HDL and graphical design tool suite";
         private const ushort _DEFAULT_TOKEN_LIFETIME_DAYS = 30;
 
         private readonly IConfigurationSection _section;
