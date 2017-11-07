@@ -1,8 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <ApplicationIcon />
+    <StartupObject />
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LittleSocialNetwork.Common\LittleSocialNetwork.Common.csproj" />
+    <ProjectReference Include="..\LittleSocialNetwork.DataAccess\LittleSocialNetwork.DataAccess.csproj" />
+  </ItemGroup>
 
 </Project>
