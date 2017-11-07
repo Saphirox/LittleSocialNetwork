@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using LittleSocialNetwork.Common.Definitions.Constants;
 using LittleSocialNetwork.Common.Definitions.Enums;
 using LittleSocialNetwork.Common.Definitions.Results;
@@ -30,6 +31,7 @@ namespace LittleSocialNetwork.Services.Services.Implementation
                 {
                     serviceResult.ErrorMessage = "Email have already exist";
                     serviceResult.Status = ResultStatus.Error;
+                    return serviceResult;
                 }
                 
                 user.Password = _hashingService.Hash(user.Password);

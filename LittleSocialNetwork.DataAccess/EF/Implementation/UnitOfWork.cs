@@ -9,10 +9,10 @@ namespace LittleSocialNetwork.DataAccess.EF.Implementation
     public class UnitOfWork : IUnitOfWork
     {
         private readonly Dictionary<Type, object> _repositories;
-        private readonly DbContext _dbContext;
         private IDbContextTransaction _transaction;
         private object _createdRepositoryLock;
         private bool _transactionClosed;
+        private readonly ApplicationDbContext _dbContext;
 
         public UnitOfWork(ApplicationDbContext dbContext)
         {
@@ -31,7 +31,7 @@ namespace LittleSocialNetwork.DataAccess.EF.Implementation
                 {
                     if (!_repositories.ContainsKey(typeof(TEntity)))
                     {
-                        _repositories.Add(typeof(TEntity), _dbContext.Set<TEntity>());
+                        _repositories.Add(typeof(TEntity), new Repository<TEntity>(_dbContext));
                     }
                 }
             }

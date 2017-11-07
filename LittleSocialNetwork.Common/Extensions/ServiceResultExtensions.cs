@@ -14,6 +14,12 @@ namespace LittleSocialNetwork.Common.Extensions
         {
             var serviceResult = new ServiceResult<TModel>();
 
+            if (!source.IsSuccessed)
+            {
+                serviceResult.UpdateFrom(source);
+                return serviceResult;
+            }
+
             serviceResult.UpdateFrom(source, transformator);
 
             return serviceResult;
@@ -25,6 +31,12 @@ namespace LittleSocialNetwork.Common.Extensions
             where TEntity : class where TModel : class
         {
             var serviceResult = new ServiceResult<IEnumerable<TModel>>();
+
+            if (!serviceResult.IsSuccessed)
+            {
+                serviceResult.UpdateFrom(source);
+                return serviceResult;
+            }
 
             serviceResult.UpdateFrom(source, transformator);
 

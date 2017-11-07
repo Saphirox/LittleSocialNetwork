@@ -11,7 +11,7 @@ namespace LittleSocialNetwork.Common.Definitions.Results
 
     public static class ResultExtensions
     {
-        public static void UpdateFrom(IResult result, IResult source)
+        public static void UpdateFrom(this IResult result, IResult source)
         {
             result.Status = source.Status;
             result.ErrorMessage = source.ErrorMessage;

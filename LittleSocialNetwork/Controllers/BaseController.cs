@@ -23,11 +23,6 @@ namespace LittleSocialNetwork.Web.Controllers
                 
         protected IActionResult ReturnResult<TEntity>(ServiceResult<TEntity> serviceResult) where TEntity : class
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             if (serviceResult.IsSuccessed)
             {
                 _uow?.CommitTransaction();
@@ -44,11 +39,6 @@ namespace LittleSocialNetwork.Web.Controllers
 
         protected IActionResult ReturnResult(ServiceResult serviceResult)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            
             if (serviceResult.IsSuccessed)
             {
                 _uow?.CommitTransaction();
@@ -62,5 +52,6 @@ namespace LittleSocialNetwork.Web.Controllers
                     ? Forbid()
                     : StatusCode((int)HttpStatusCode.InternalServerError) as IActionResult;
         }
+
     }
 }
