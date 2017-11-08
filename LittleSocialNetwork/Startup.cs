@@ -8,6 +8,7 @@ using LittleSocialNetwork.Configurations;
 using LittleSocialNetwork.DataAccess;
 using LittleSocialNetwork.DataAccess.IoC;
 using LittleSocialNetwork.Services.IoC;
+using LittleSocialNetwork.Web.IoC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -45,14 +46,10 @@ namespace LittleSocialNetwork.Web
                 .RegisterServiceDependencies()
                 .RegisterCommonDependencies()
                 .RegisterConfiguration(_configuration)
+                .RegisterWebDependencies()
                 .RegisterDependencyResolver();
 
             services.AddMvc();
-
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
-            });
 
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(_dependencyResolver.GetService<IAppSettings>().DatabaseSettings.CONNECTION_STRING));
             services.AddJwtAuthentication(_dependencyResolver.GetService<IAppSettings>());

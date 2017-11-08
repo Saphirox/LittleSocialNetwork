@@ -12,10 +12,12 @@ namespace LittleSocialNetwork.Common.Definitions.Settings
             _confRoot = confRoot;
             AuthenticationSettings = new AuthenticationSettings(confRoot.GetSection(ConfigurationFileKeys.AUTHENTICATION_SECTION));
             DatabaseSettings = new DatabaseSettings(confRoot.GetSection(ConfigurationFileKeys.DATABASE_SECTION));
+            EmailSettings = new EmailSettings(confRoot.GetSection(ConfigurationFileKeys.EMAIL_SECTION));
         }
 
         public AuthenticationSettings AuthenticationSettings { get; }
         public DatabaseSettings DatabaseSettings { get; }
+        public EmailSettings EmailSettings { get; }
         public string APPLICATION_ROOT => _confRoot[ConfigurationFileKeys.APPLICATION_ROOT];
     }
 }

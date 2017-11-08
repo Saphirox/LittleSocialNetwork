@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MailKit" Version="1.20.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\LittleSocialNetwork.Common\LittleSocialNetwork.Common.csproj" />
     <ProjectReference Include="..\LittleSocialNetwork.DataAccess\LittleSocialNetwork.DataAccess.csproj" />
   </ItemGroup>

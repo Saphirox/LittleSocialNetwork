@@ -2,9 +2,25 @@
 {
     public class ConfigurationFileKeys
     {
-        public static string AUTHENTICATION_SECTION = "Authentication";
+        public const string REQUIRE_SSL = "Require SSL";
 
-        public static string DATABASE_SECTION = "Connection strings";
+        public const string SYSTEM_SENDER_ADDRESS = "Mail sender address";
+
+        public const string MAIL_SMTP_PORT = "Mail port";
+
+        public const string AUTHENTICATION_SECTION = "Authentication";
+
+        public const string MAIL_SMTP_PASSWORD = "Mail password";
+
+        public const string MAIL_SMTP_LOGIN = "Mail login";
+
+        public const string SYSTEM_SENDER_TITLE = "Mail sender title";
+
+        public const string EMAIL_SECTION = "Email";
+
+        public const string DATABASE_SECTION = "Connection strings";
+
+        public const string MAIL_SMTP_HOST = "Mail smtp host";
 
         public const string CONNECTION_STRING = "Database string";
 

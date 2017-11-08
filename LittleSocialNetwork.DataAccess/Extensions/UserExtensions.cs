@@ -6,7 +6,7 @@ namespace LittleSocialNetwork.DataAccess.Extensions
 {
     public static class UserExtensions
     {
-        public static User GetUserByEmail(this IRepository<User> repository, string email)
+        public static User FindUserByEmail(this IRepository<User> repository, string email)
         {
             return repository.GetQueryable().SingleOrDefault(u => u.Email == email);
         }

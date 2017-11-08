@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <Folder Include="Definitions\Dictionary\" />
+    <Folder Include="Definitions\Enums\NewFolder\" />
   </ItemGroup>
 
 </Project>

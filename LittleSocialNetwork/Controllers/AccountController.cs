@@ -44,5 +44,30 @@ namespace LittleSocialNetwork.Web.Controllers
             return ReturnResult(_accountService.Authenticate(model.To())
                 .ConvertToResult(user => JwtTokenApiModel.From(user, _settings)));
         }
+
+        [HttpPost]
+        [Route("forgot-password-email")]
+        public IActionResult ForgotPasswordViaEmail([FromBody] ForgotPasswordViaEmailApiModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return ReturnResult(_accountService.ForgotPassword(model.Email, NotificationSourceType.Email));
+        }
+
+        [HttpPost]
+        [Route("restore-password-email")]
+        public IActionResult RestorePassword([FromBody]RestorePasswordViaEmailApiModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return ReturnResult(_accountService.ChangePassword(model.Email, model.NewPassword,
+                NotificationSourceType.Email));
+        }
     }
 }

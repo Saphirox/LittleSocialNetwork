@@ -4,6 +4,7 @@
     {
         AuthenticationSettings AuthenticationSettings { get; }  
         DatabaseSettings DatabaseSettings { get; }
+        EmailSettings EmailSettings { get; }
 
         string APPLICATION_ROOT { get; }
     }
