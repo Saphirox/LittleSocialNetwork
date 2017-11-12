@@ -1,4 +1,4 @@
-﻿using LittleSocialNetwork.ApiModels.Models;
+using LittleSocialNetwork.ApiModels.Models;
 using LittleSocialNetwork.Common.Definitions.Enums;
 using LittleSocialNetwork.Common.Definitions.Settings;
 using LittleSocialNetwork.Common.Extensions;
@@ -20,7 +20,7 @@ namespace LittleSocialNetwork.Web.Controllers
         }
 
         [HttpPost]
-        [Route("create-user")]
+         [Route("create-user")]
         public IActionResult RegisterAsUser([FromBody]RegisterApiModel model)
         {
             if (!ModelState.IsValid)

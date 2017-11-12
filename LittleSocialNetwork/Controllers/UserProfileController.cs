@@ -1,4 +1,4 @@
-﻿using LittleSocialNetwork.ApiModels.Models;
+using LittleSocialNetwork.ApiModels.Models;
 using LittleSocialNetwork.Common.Extensions;
 using LittleSocialNetwork.Services.Services;
 using Microsoft.AspNetCore.Mvc;

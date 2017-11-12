@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using LittleSocialNetwork.Common.Definitions.Constants;
 using LittleSocialNetwork.Common.Definitions.DependencyResolver;
@@ -50,7 +50,7 @@ namespace LittleSocialNetwork.Web
                 .RegisterDependencyResolver();
 
             services.AddMvc();
-
+            services.AddCors();
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(_dependencyResolver.GetService<IAppSettings>().DatabaseSettings.CONNECTION_STRING));
             services.AddJwtAuthentication(_dependencyResolver.GetService<IAppSettings>());
         }
@@ -62,6 +62,8 @@ namespace LittleSocialNetwork.Web
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().Build());
+
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
@@ -70,7 +72,6 @@ namespace LittleSocialNetwork.Web
 
             app.UseMvc();
             app.UseAuthentication();
-
             app.UseDefaultFiles();
             app.UseStaticFiles();
         }

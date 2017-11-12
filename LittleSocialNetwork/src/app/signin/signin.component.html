@@ -1,0 +1,18 @@
+<div class="container">
+    <h1 class="text-center">
+        Signin
+    </h1>
+    <mat-card>
+        <mat-card-content>
+            <mat-form-field>
+                <input [(ngModel)]="email" placeholder="Email" matInput type="text">
+            </mat-form-field>
+
+            <mat-form-field>
+                <input [(ngModel)]="password" placeholder="Password" matInput type="text">
+            </mat-form-field>
+
+            <button mat-button color="primary" (click)="signin()">Submit</button>
+        </mat-card-content>
+    </mat-card>
+</div>
