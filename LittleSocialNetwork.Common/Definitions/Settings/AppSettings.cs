@@ -13,8 +13,10 @@ namespace LittleSocialNetwork.Common.Definitions.Settings
             AuthenticationSettings = new AuthenticationSettings(confRoot.GetSection(ConfigurationFileKeys.AUTHENTICATION_SECTION));
             DatabaseSettings = new DatabaseSettings(confRoot.GetSection(ConfigurationFileKeys.DATABASE_SECTION));
             EmailSettings = new EmailSettings(confRoot.GetSection(ConfigurationFileKeys.EMAIL_SECTION));
+            ChatSettings = new ChatSettings(confRoot.GetSection(ConfigurationFileKeys.CHAT_SECTION));
         }
 
+        public ChatSettings ChatSettings { get; }
         public AuthenticationSettings AuthenticationSettings { get; }
         public DatabaseSettings DatabaseSettings { get; }
         public EmailSettings EmailSettings { get; }

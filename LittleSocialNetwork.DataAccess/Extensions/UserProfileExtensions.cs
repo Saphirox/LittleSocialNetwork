@@ -1,4 +1,7 @@
-﻿using LittleSocialNetwork.Entities;
+﻿using System.Collections.Generic;
+using System.Linq;
+using LittleSocialNetwork.DataAccess.EF;
+using LittleSocialNetwork.Entities;
 
 namespace LittleSocialNetwork.DataAccess.Extensions
 {

@@ -24,10 +24,10 @@ namespace LittleSocialNetwork.Common.Definitions.Results
         {
             get
             {
-                if (!IsSuccessed)
-                {
-                    throw new ArgumentException("Cannot retrieve value because of empty result or error status");
-                }
+                //if (!IsSuccessed)
+                //{
+                //    throw new ArgumentException("Cannot retrieve value because of empty result or error status");
+                //}
 
                 return _serviceResult;
             }

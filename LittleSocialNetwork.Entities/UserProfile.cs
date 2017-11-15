@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using LittleSocialNetwork.Common.Definitions.Enums;
 
 namespace LittleSocialNetwork.Entities
@@ -10,5 +11,7 @@ namespace LittleSocialNetwork.Entities
         public string LastName { get; set; }
         public Sex Sex { get; set; }
         public DateTime BirthDate { get; set; }
+        public IEnumerable<SingleChatMessage> MessagesToMe { get; set; }
+        public IEnumerable<SingleChatMessage> MessagesFromMe { get; set; }
     }
 }

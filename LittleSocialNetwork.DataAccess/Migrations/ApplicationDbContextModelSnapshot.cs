@@ -21,6 +21,32 @@ namespace LittleSocialNetwork.DataAccess.Migrations
                 .HasAnnotation("ProductVersion", "2.0.0-rtm-26452")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("LittleSocialNetwork.Entities.SingleChatMessage", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<long>("FromId");
+
+                    b.Property<int>("IsDeleted");
+
+                    b.Property<DateTime?>("LastEdited");
+
+                    b.Property<DateTime>("PostTime");
+
+                    b.Property<string>("Text");
+
+                    b.Property<long>("ToId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FromId");
+
+                    b.HasIndex("ToId");
+
+                    b.ToTable("SingleChatMessage");
+                });
+
             modelBuilder.Entity("LittleSocialNetwork.Entities.User", b =>
                 {
                     b.Property<long>("Id")
@@ -62,7 +88,20 @@ namespace LittleSocialNetwork.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Profiles");
+                    b.ToTable("UserProfiles");
+                });
+
+            modelBuilder.Entity("LittleSocialNetwork.Entities.SingleChatMessage", b =>
+                {
+                    b.HasOne("LittleSocialNetwork.Entities.UserProfile", "From")
+                        .WithMany("MessagesFromMe")
+                        .HasForeignKey("FromId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("LittleSocialNetwork.Entities.UserProfile", "To")
+                        .WithMany("MessagesToMe")
+                        .HasForeignKey("ToId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("LittleSocialNetwork.Entities.User", b =>

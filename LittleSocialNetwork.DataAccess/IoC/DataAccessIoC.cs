@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace LittleSocialNetwork.DataAccess.IoC
 {
-    public static class ServicesIoC
+    public static class DataAccessIoC
     {
         public static IServiceCollection RegisterDataAccessDependencies(this IServiceCollection collection)
         {

@@ -32,7 +32,7 @@ namespace LittleSocialNetwork.Common.Extensions
         {
             var serviceResult = new ServiceResult<IEnumerable<TModel>>();
 
-            if (!serviceResult.IsSuccessed)
+            if (!source.IsSuccessed)
             {
                 serviceResult.UpdateFrom(source);
                 return serviceResult;
@@ -42,6 +42,5 @@ namespace LittleSocialNetwork.Common.Extensions
 
             return serviceResult;
         }
-
     }
 }

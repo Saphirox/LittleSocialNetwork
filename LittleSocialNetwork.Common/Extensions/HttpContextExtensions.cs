@@ -16,6 +16,11 @@ namespace LittleSocialNetwork.Common.Extensions
                     ? userId : 0;
         }
 
+        public static string GetUserIdAsString(this HttpContext context)
+        {
+            return context.User.FindFirst(ClaimTypes.Sid)?.Value;
+        }
+
         public static UserRole GetUserRole(this HttpContext context)
         {
             return Enum.TryParse(

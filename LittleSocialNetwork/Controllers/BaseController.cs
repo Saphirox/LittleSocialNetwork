@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using LittleSocialNetwork.Common.Definitions.Enums;
 using LittleSocialNetwork.Common.Definitions.Results;
 using LittleSocialNetwork.Common.Extensions;
@@ -13,6 +13,7 @@ namespace LittleSocialNetwork.Web.Controllers
 
         public BaseController()
         {}
+
         public BaseController(IUnitOfWork uow)
         {
             _uow = uow;

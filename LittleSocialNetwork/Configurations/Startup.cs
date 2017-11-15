@@ -11,17 +11,17 @@ using LittleSocialNetwork.Services.IoC;
 using LittleSocialNetwork.Web.IoC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Swashbuckle.AspNetCore.Swagger;
+using LittleSocialNetwork.Web.Configurations;
 
 namespace LittleSocialNetwork.Web
 {
     public class Startup
     {
-        private IDependencyResolver _dependencyResolver;
         private readonly IConfigurationRoot _configuration;
+        private IDependencyResolver _dependencyResolver;
+        private IAppSettings _settings;
 
         public Startup(IHostingEnvironment env)
         {
@@ -49,10 +49,13 @@ namespace LittleSocialNetwork.Web
                 .RegisterWebDependencies()
                 .RegisterDependencyResolver();
 
+            _settings = _dependencyResolver.GetService<IAppSettings>();
+
+            services.RegisterDatabase(_settings);
+            services.AddSignalR();
             services.AddMvc();
             services.AddCors();
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(_dependencyResolver.GetService<IAppSettings>().DatabaseSettings.CONNECTION_STRING));
-            services.AddJwtAuthentication(_dependencyResolver.GetService<IAppSettings>());
+            services.AddJwtAuthentication(_settings);
         }
         
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -62,14 +65,11 @@ namespace LittleSocialNetwork.Web
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().Build());
-
+            app.UseAuthentication();
+            app.UseChats(_settings);
+            app.UseCors();
             app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "SeshMe API");
-            });
-
+            app.UseSwaggerUI();
             app.UseMvc();
             app.UseAuthentication();
             app.UseDefaultFiles();

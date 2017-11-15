@@ -2,6 +2,10 @@
 {
     public class ConfigurationFileKeys
     {
+        public const string CHAT_SECTION = "Chat";
+
+        public const string SINGLE_CHAT_URL = "Single chat";
+        
         public const string REQUIRE_SSL = "Require SSL";
 
         public const string SYSTEM_SENDER_ADDRESS = "Mail sender address";
