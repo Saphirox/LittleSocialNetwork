@@ -15,6 +15,7 @@ namespace LittleSocialNetwork.Services.IoC
             collection.AddTransient<IHashingService, HashingService>();
             collection.AddTransient<INotificationServiceFactory, NotificationServiceFactory>();
             collection.AddTransient<ISingleChatMessageService, SingleChatMessageService>();
+            collection.AddTransient<IFrienshipService, FrienshipService>();
             return collection;
         }
     }
