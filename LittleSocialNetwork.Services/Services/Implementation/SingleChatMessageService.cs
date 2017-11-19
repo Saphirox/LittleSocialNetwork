@@ -19,68 +19,6 @@ namespace LittleSocialNetwork.Services.Services.Implementation
             _uow = uow;
         }
 
-        public ServiceResult Connect(long hubId, long currentUserId)
-        {
-            throw new NotImplementedException();
-
-            var serviceResult = new ServiceResult();
-
-            try
-            {
-                var user =  _uow.Repository<UserProfile>()
-                    .FindById(currentUserId);
-
-                if (user == null)
-                {
-                    serviceResult.Status = ResultStatus.Error;
-                    serviceResult.ErrorMessage = "User does not exist";
-                    return serviceResult;
-                }
-
-                _uow.SaveChanges();
-
-                serviceResult.Status = ResultStatus.Success;
-            }
-            catch (Exception e)
-            {
-                serviceResult.Status = ResultStatus.ServerError;
-            }
-
-            return serviceResult;
-        }
-
-        public ServiceResult Disconnect(long currentUserId)
-        {
-            throw new NotImplementedException();
-
-            var serviceResult = new ServiceResult();
-
-            try
-            {
-                var user = _uow.Repository<UserProfile>()
-                    .FindById(currentUserId);
-
-                if (user == null)
-                {
-                    serviceResult.Status = ResultStatus.Error;
-                    serviceResult.ErrorMessage = "User does not exist";
-                    return serviceResult;
-                }
-
-                //user.SingleChatHubId = 0;
-
-                _uow.SaveChanges();
-
-                serviceResult.Status = ResultStatus.Success;
-            }
-            catch (Exception e)
-            {
-                serviceResult.Status = ResultStatus.ServerError;
-            }
-
-            return serviceResult;
-        }
-
         public ServiceResult<SingleChatMessage> CreateMessage(SingleChatMessage message)
         {
             var serviceResult = new ServiceResult<SingleChatMessage>();
@@ -89,6 +27,14 @@ namespace LittleSocialNetwork.Services.Services.Implementation
             {
                 _uow.Repository<SingleChatMessage>().Add(message);
                 _uow.SaveChanges();
+
+                var result = _uow.Repository<SingleChatMessage>()
+                    .GetQueryable()
+                    .Include(s => s.To)
+                    .Include(s => s.From)
+                    .FirstOrDefault(m => message.Id == m.Id);
+
+                serviceResult.Result = result;
                 serviceResult.Status = ResultStatus.Success;
             }
             catch (Exception e)
@@ -192,13 +138,20 @@ namespace LittleSocialNetwork.Services.Services.Implementation
 
             try
             {
-                serviceResult.Result = _uow.Repository<UserProfile>()
-                    .FindByIdQueryable(userId)
-                    .Include(m => m.MessagesFromMe)
-                    .ThenInclude(m => m.To)
-                    .Include(m => m.MessagesFromMe)
-                    .ThenInclude(m => m.From)
+
+                var messages = _uow.Repository<SingleChatMessage>()
+                    .GetQueryable()
+                    .Where(m => m.FromId == userId || m.ToId == userId)
+                    .Include(s => s.From)
+                    .Include(s => s.To)
                     .ToList();
+
+                var coll1 = messages.Select(s => s.From);
+                
+                var coll2 = messages.Select(s => s.To);
+
+                serviceResult.Result = coll1.Concat(coll2).Distinct(new TestClass()).Where(s => s.Id != userId);
+                    
 
                 serviceResult.Status = ResultStatus.Success;
             }
@@ -208,6 +161,63 @@ namespace LittleSocialNetwork.Services.Services.Implementation
             }
 
             return serviceResult;
+        }
+
+        public ServiceResult Connect(string email, string connId)
+        {
+            var serviceResult = new ServiceResult<string>();
+
+            try
+            {
+                var user = _uow.Repository<User>().FindByEmailQueryable(email).Include(u => u.UserProfile).FirstOrDefault();
+
+                user.UserProfile.ChatConnectionId = connId;
+
+                _uow.SaveChanges();
+                serviceResult.Status = ResultStatus.Success;
+            }
+            catch (Exception e)
+            {
+                serviceResult.Status = ResultStatus.ServerError;
+            }
+
+            return serviceResult;
+        }
+
+
+        public ServiceResult Disconnect(string email)
+        {
+            var serviceResult = new ServiceResult();
+
+            try
+            {
+                var user = _uow.Repository<User>().FindByEmailQueryable(email).Include(u => u.UserProfile).FirstOrDefault();
+
+                user.UserProfile.ChatConnectionId = null;
+
+                _uow.SaveChanges();
+                serviceResult.Status = ResultStatus.Success;
+            }
+            catch (Exception e)
+            {
+                serviceResult.Status = ResultStatus.ServerError;
+            }
+
+            return serviceResult;
+        }
+
+
+        private class TestClass : IEqualityComparer<UserProfile>
+        {
+            public bool Equals(UserProfile x, UserProfile y)
+            {
+                return x == y;
+            }
+
+            public int GetHashCode(UserProfile obj)
+            {
+                return obj.GetHashCode();
+            }
         }
     }
 }

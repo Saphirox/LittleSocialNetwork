@@ -4,7 +4,6 @@ using LittleSocialNetwork.Common.Definitions.Constants;
 using LittleSocialNetwork.Common.Definitions.DependencyResolver;
 using LittleSocialNetwork.Common.Definitions.Settings;
 using LittleSocialNetwork.Common.IoC;
-using LittleSocialNetwork.Configurations;
 using LittleSocialNetwork.DataAccess;
 using LittleSocialNetwork.DataAccess.IoC;
 using LittleSocialNetwork.Services.IoC;
@@ -65,13 +64,12 @@ namespace LittleSocialNetwork.Web
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors();
             app.UseAuthentication();
             app.UseChats(_settings);
-            app.UseCors();
             app.UseSwagger();
             app.UseSwaggerUI();
             app.UseMvc();
-            app.UseAuthentication();
             app.UseDefaultFiles();
             app.UseStaticFiles();
         }

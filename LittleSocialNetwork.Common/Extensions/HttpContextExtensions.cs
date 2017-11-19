@@ -16,6 +16,11 @@ namespace LittleSocialNetwork.Common.Extensions
                     ? userId : 0;
         }
 
+        public static string GetUserEmail(this ClaimsPrincipal context)
+        {
+            return context.FindFirst(ClaimTypes.Email).Value;
+        }
+
         public static string GetUserIdAsString(this HttpContext context)
         {
             return context.User.FindFirst(ClaimTypes.Sid)?.Value;

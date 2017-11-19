@@ -11,5 +11,10 @@ namespace LittleSocialNetwork.DataAccess.Extensions
         {
             return profile.GetQueryable().Where(up => ids.Contains(up.Id));
         }
+
+        public static IQueryable<User> FindByEmailQueryable(this IRepository<User> profile, string email)
+        {
+            return profile.GetQueryable().Where(up => up.Email == email);
+        }
     }
 }

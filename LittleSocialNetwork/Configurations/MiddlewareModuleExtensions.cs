@@ -8,7 +8,8 @@ namespace LittleSocialNetwork.Web.Configurations
     {
         public static void UseCors(this IApplicationBuilder app)
         {
-            app.UseCors(builder => builder.AllowAnyOrigin()
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .Build());

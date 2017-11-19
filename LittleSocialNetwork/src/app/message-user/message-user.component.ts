@@ -14,5 +14,6 @@ export class MessageUserComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log(this.user);
   }
 }

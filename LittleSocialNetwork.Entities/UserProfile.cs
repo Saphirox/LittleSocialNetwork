@@ -13,5 +13,6 @@ namespace LittleSocialNetwork.Entities
         public DateTime BirthDate { get; set; }
         public IEnumerable<SingleChatMessage> MessagesToMe { get; set; }
         public IEnumerable<SingleChatMessage> MessagesFromMe { get; set; }
+        public string ChatConnectionId { get; set; }
     }
 }

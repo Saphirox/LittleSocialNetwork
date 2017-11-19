@@ -1,6 +1,7 @@
 
 using System.Threading.Tasks;
 using LittleSocialNetwork.ApiModels.Models;
+using LittleSocialNetwork.Common.Definitions.Results;
 using LittleSocialNetwork.Common.Extensions;
 using LittleSocialNetwork.Services.Services;
 using LittleSocialNetwork.Web.Configurations;
@@ -11,7 +12,7 @@ using Microsoft.AspNetCore.SignalR;
 namespace LittleSocialNetwork.Web.Controllers
 {
     [Route("api/messages")]
-    public class SingleChatController : HubController<ChatHub, ISingleChatMessageService>
+    public class SingleChatController : HubController<ChatHub>
     {
         private readonly ISingleChatMessageService _messageService;
 
@@ -20,9 +21,9 @@ namespace LittleSocialNetwork.Web.Controllers
             _messageService = messageService;
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("get-conversations")]
-        public async Task<IActionResult> GetConversations()
+        public IActionResult GetConversations()
         {
             return ReturnResult(_messageService.GetConversations(CurrentUserId).ConvertToResult(UserProfileApiModel.From));
         }
@@ -35,14 +36,15 @@ namespace LittleSocialNetwork.Web.Controllers
             {
                 return BadRequest(model);
             }
+            var service = _messageService.CreateMessage(model.To(CurrentUserId));
 
-            return await ReturnResult(
-                _messageService.CreateMessage(model.To(CurrentUserId)), nameof(CreateMessage), CurrentUserIdAsString, model.ToId.ToString());
+            return await ReturnResult(service.ConvertToResult(SingleChatMessageApiModel.From)
+                , nameof(CreateMessage), service.Result.To.ChatConnectionId, service.Result.From.ChatConnectionId);
         }
 
         [HttpGet]
         [Route("get-messages")]
-        public async Task<IActionResult> GetMessages(
+        public IActionResult GetMessages(
             [RequiredFromQuery] long otherId,
             [RequiredFromQuery] int skip,
             [RequiredFromQuery] int take)

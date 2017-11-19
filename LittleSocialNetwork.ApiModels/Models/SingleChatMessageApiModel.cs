@@ -7,12 +7,12 @@ namespace LittleSocialNetwork.ApiModels.Models
 {
     public class SingleChatMessageApiModel
     {
-        public long Id { get; set; }
+        public long? Id { get; set; }
         [Required]
         public string Text { get; set; }
         public DateTime? PostTime { get; set; }
         public DateTime? LastEdited { get; set; }
-        public long FromId { get; set; }
+        public long? FromId { get; set; }
         public long ToId { get; set; }
         public string FullName { get; set; }
 

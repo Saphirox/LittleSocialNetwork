@@ -1,3 +1,4 @@
+import { AuthSettings } from './../_settings/auth.settings';
 import { ApiSettings } from './../_settings/api.settings';
 import { HubConnection } from '@aspnet/signalr-client';
 import { MessageService } from './../_services/message.service';
@@ -21,16 +22,40 @@ export class ChatComponent implements OnInit {
   }
 
   ngOnInit() {
+    this._message = {
+    //  id: 0,
+      text: '',
+      // postTime: Date(),
+      // lastEdited: Date(),
+      // fromId: 0,
+      // toId: 0,
+      // fullName: ''
+    };
     console.log(`Other id: ${this.otherId}`);
     this.getMessages();
-    this._hubConnection = new HubConnection(ApiSettings.singleChatHub);
-    this._hubConnection.on('createMessage', (data: MessageModel) => {
+    const bearer = `${localStorage.getItem(AuthSettings.tokenKey)}`;
+    
+    this._hubConnection = new HubConnection(`http://localhost:55872/chat?token=${bearer}`);
+    this._hubConnection.on('createMessage', (data: any) => {
+      console.log('Added element');
+      console.log(data);
       this._messages.push(data);
     });
+
+ this._hubConnection.start()
+            .then(() => {
+                console.log('Hub connection started');
+            })
+            .catch(err => {
+                console.log(err);
+                console.log('Error while establishing connection');
+            });
   }
 
   createMessage() {
-    this.messageService.createMessage(this._message).subscribe();
+    console.log('Create message:');
+    console.log(this._message);
+    this.messageService.createMessage(this._message, this.otherId).subscribe();
   }
 
   getMessages() {

@@ -16,7 +16,9 @@ export class MessageService {
                     }, err => Observable.throw(err));
     }
 
-    createMessage(message: MessageModel) {
+    createMessage(message: MessageModel, otherId: number) {
+        message.toId = otherId;
+        console.log(message);
         return this.http.post<MessageModel>(ApiSettings.createMessage, message)
             .map(res => res, err => Observable.throw(err));
     }

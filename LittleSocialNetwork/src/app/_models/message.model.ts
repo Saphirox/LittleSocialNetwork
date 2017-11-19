@@ -1,9 +1,9 @@
 export class MessageModel {
     id: number;
     text: string;
-    postTime: Date;
-    lastEdited: Date;
-    fromId: string;
-    ToId: number;
+    postTime: string;
+    lastEdited: string;
+    fromId: number;
+    toId: number;
     fullName: string;
 }

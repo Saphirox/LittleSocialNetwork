@@ -11,6 +11,7 @@ namespace LittleSocialNetwork.ApiModels.Extensions
             {
                 new Claim(ClaimTypes.Sid, user.Id.ToString()),
                 new Claim(ClaimTypes.Role, user.Role.ToString()), 
+                new Claim(ClaimTypes.Email, user.Email), 
             });
         }
     }

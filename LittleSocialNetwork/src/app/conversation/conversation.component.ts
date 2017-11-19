@@ -19,9 +19,11 @@ export class ConversationComponent implements OnInit {
   constructor(private _conv: ConversationService) { }
 
   ngOnInit() {
-    // this._activeChatWith = 1;
+    this._users = [];
      this._conv.getConversations().subscribe(res => {
-       this._users = res;
+        console.log('Users');
+        console.table(res);
+        this._users = res;
       });
   }
 }

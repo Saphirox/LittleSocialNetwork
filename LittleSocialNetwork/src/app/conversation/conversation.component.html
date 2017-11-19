@@ -1,10 +1,15 @@
-<div class="container">
-    <mat-grid-list cols="4" rowHeight="100px">
-        <mat-grid-tile [colspan]="1" [rowspan]="2">
-            <app-message-user [user]="_user"></app-message-user>
+<!-- <div class="container">
+    <mat-grid-list cols="4 " rowHeight="1:2 ">
+        <mat-grid-tile [colspan]="1 ">
+            <ng-container *ngIf="_users.length> 0">
+                <app-message-user *ngFor="let user of _users" [user]="user"></app-message-user>
+            </ng-container>
         </mat-grid-tile>
-        <mat-grid-tile [colspan]="3" [rowspan]="2">
+        <mat-grid-tile [colspan]="3">
             <app-chat [otherId]="1"></app-chat>
         </mat-grid-tile>
     </mat-grid-list>
-</div>
+</div> -->
+<ng-container *ngIf="_users.length > 0">
+    <app-chat [otherId]="_users[0].id"></app-chat>
+</ng-container>

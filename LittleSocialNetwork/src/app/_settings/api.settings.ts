@@ -7,7 +7,7 @@ export class ApiSettings {
    public static getCurrentUserConversations = ApiSettings.url + '/api/messages/get-conversations';
 
    // For signalR
-   public static singleChatHub =  ApiSettings.url + '/single-chat';
+   public static singleChatHub =  ApiSettings.url + '/chat';
 
    public static getLongMessages(otherId: number) {
         return ApiSettings.url + `/api/messages/get-messages?otherId=${otherId}&take=10&skip=0`;

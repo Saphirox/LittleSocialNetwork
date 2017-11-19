@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using LittleSocialNetwork.Common.Definitions.Results;
 using LittleSocialNetwork.Common.Extensions;
@@ -22,13 +23,13 @@ namespace LittleSocialNetwork.Web.Controllers
             return _hubContext.Value;
         }
 
-        private async Task InvokeAsync(string userId, string methodName, params object[] model)
+        private async Task InvokeAsync(string connectionId, string methodName, params object[] model)
         {
             var chars = methodName.ToCharArray();
             chars[0] = char.ToLower(chars[0]);
             methodName = new string(chars);
             
-            await GetHubContext().Clients.User(userId).InvokeAsync(methodName, model);
+            await GetHubContext().Clients.Client(connectionId).InvokeAsync(methodName, model);
         }
 
         protected async Task<IActionResult> ReturnResult<TResult>(ServiceResult<TResult> serviceResult, string methodName, params string[] userIds) where TResult : class
@@ -38,21 +39,14 @@ namespace LittleSocialNetwork.Web.Controllers
                 return ReturnResult(serviceResult);
             }
 
-            foreach (var userId in userIds)
+            foreach (var userId in userIds.Where(s => s != null))
             {
                 await InvokeAsync(userId, methodName, serviceResult.Result);
             }
 
-            return await Task.FromResult(Ok());
+            return ReturnResult(serviceResult);
         }
 
         protected string CurrentUserIdAsString => HttpContext.GetUserIdAsString();
-    }
-
-    public class HubController<THub, TService> : HubController<THub>
-        where THub : Hub<TService> where TService : class
-    {
-        protected HubController(IHubContext<THub> hubContext) : base(hubContext)
-        { }
     }
 }
