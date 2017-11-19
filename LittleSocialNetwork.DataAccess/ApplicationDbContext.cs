@@ -11,8 +11,9 @@ namespace LittleSocialNetwork.DataAccess
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.ApplyConfiguration(new UserConfiguration());
-            modelBuilder.ApplyConfiguration(new SingleChatMessageConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration())
+                        .ApplyConfiguration(new SingleChatMessageConfiguration())
+                        .ApplyConfiguration(new FrienshipConfiguration());
         }
 
         public ApplicationDbContext(DbContextOptions options) : base(options)
@@ -20,5 +21,7 @@ namespace LittleSocialNetwork.DataAccess
 
         public DbSet<User> Users { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
+        public DbSet<SingleChatMessage> SingleChatMessages { get; set; }
+        public DbSet<Friendship> Friendships { get; set; }
     }
 }
