@@ -8,7 +8,7 @@ namespace LittleSocialNetwork.Web.Controllers
     [Route("api/friendship")]
     public class FriendshipController : BaseController
     {
-        private IFrienshipService _frienshipService;
+        private readonly IFrienshipService _frienshipService;
 
         public FriendshipController(IFrienshipService frienshipService)
         {
@@ -16,9 +16,9 @@ namespace LittleSocialNetwork.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Invite([RequiredFromQuery] FriendshipApiModel model)
+        public IActionResult Invite([FromBody] FriendshipApiModel model)
         {
-            return ReturnResult(_frienshipService.Accept(model.To()));
+            return ReturnResult(_frienshipService.Accept(model.To(CurrentUserId)));
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using LittleSocialNetwork.Common.Definitions.Constants;
 using LittleSocialNetwork.Common.Definitions.Enums;
 using LittleSocialNetwork.Common.Definitions.Results;
 using LittleSocialNetwork.DataAccess.EF;
@@ -28,9 +29,12 @@ namespace LittleSocialNetwork.Services.Services.Implementation
 
                 if (friends.Any())
                 {
-                    serviceResult.ErrorMessage = "User already have friendship with you";
-                    serviceResult.Status = ResultStatus.Error;
-                    return serviceResult;
+                    if (friends.Any(f => f.Id == friendship.ToId))
+                    {
+                        serviceResult.ErrorMessage = EMessages.UserHaveFriendship;
+                        serviceResult.Status = ResultStatus.Error;
+                        return serviceResult;
+                    }
                 }
 
                 var requests = _uow.Repository<Friendship>()
@@ -41,7 +45,7 @@ namespace LittleSocialNetwork.Services.Services.Implementation
 
                 if (requests.Any())
                 {
-                    serviceResult.ErrorMessage = "User already have friendship with you";
+                    serviceResult.ErrorMessage = EMessages.UserHavePendingRequest;
                     serviceResult.Status = ResultStatus.Error;
                     return serviceResult;
                 }
@@ -49,6 +53,9 @@ namespace LittleSocialNetwork.Services.Services.Implementation
                 friendship.Status = FriendshipStatus.Pending;
                 _uow.Repository<Friendship>().Add(friendship);
 
+                _uow.SaveChanges();
+
+                serviceResult.Result = friendship;
                 serviceResult.Status = ResultStatus.Success;
             }
             catch (Exception e)

@@ -11,7 +11,6 @@ namespace LittleSocialNetwork.ApiModels.Models
         public UserProfileApiModel To { get; set; }
         public long? FromId { get; set; }
         public FriendshipMode Mode { get; set; }
-
         public static FriendshipApiModel From(Friendship friendship)
         {
             return new FriendshipApiModel
@@ -25,11 +24,11 @@ namespace LittleSocialNetwork.ApiModels.Models
 
     public static class FriendshipApiModelExtension
     {
-        public static Friendship To(this FriendshipApiModel model)
+        public static Friendship To(this FriendshipApiModel model, long? userId = null)
         {
             return new Friendship()
             {
-                FromId = model.FromId ?? 0,
+                FromId = userId ?? model.FromId ?? 0,
                 ToId = model.ToId,
             };
         } 
